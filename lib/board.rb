@@ -1,8 +1,8 @@
 
 class Board
-
-  def grid
-    board = {
+attr_reader :board
+  def initialize
+    @board = {
               bs: [" ", " *BATTLESHIP*", " "],
               n:  [" ", "1", "2", "3", "4"],
               a:  ["A", " ", " ", " ", " "],
