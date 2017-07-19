@@ -26,38 +26,13 @@ class Computer
     second_placement_validator(key, index)
   end
 
-  def ship_two
-    # key = row_picker
-    # index = column_picker
-    # valid = grid_validator(key, index)
-    # if valid
-    #   grid_writer(key, index)
-    # else
-    #   ship_two
-    # end
-    first_position
-    # position_validation(key, index)
-    finalize_second_ship
-  end
 
   def position_validation(key, index)
-    if grid[key][index] == "$"
-      false
-    else
+    if grid[key][index] == " "
       true
-    end
-  end
-
-  def first_position
-    key = row_picker
-    index = column_picker
-    valid = position_validation(key, index)
-    if valid
-      grid_writer(key, index, "&")
     else
-      first_position
+      false
     end
-    [key, index]
   end
 
   def second_placement_validator(key, index)
@@ -83,8 +58,79 @@ class Computer
     grid_writer(second_position[0], second_position[1], "$")
   end
 
-  # def finalize_second_ship
-  #   ["horizontal",  "vertical"].sample
+  def first_position(key, index)
+    valid = position_validation(key, index)
+    if valid
+      grid_writer(key, index, "&")
+    else
+      ship_two
+    end
+    [key, index]
+  end
+
+  def ship_two
+    key = row_picker
+    index = column_picker
+    first_position(key, index)
+    # require "pry"; binding.pry
+    finalize_second_ship(key, index)
+  end
+
+  def finalize_second_ship(key, index)
+    possible_position = []
+    if key != :a && key != :b
+      column_up_1 = (key.to_s.ord-1).chr.to_sym
+      valid = position_validation(column_up_1, index)
+      if valid
+        column_up_2 = (key.to_s.ord-2).chr.to_sym
+        valid = position_validation(column_up_2, index)
+      end
+      if valid
+
+        grid_writer(key.to_s.ord-1, index, symbol)
+        possible_position << [column_up_1, index]
+        possible_position << [column_up_2, index]
+      end
+
+    end
+
+    if index != 4 && index != 3
+      row_right_1 = index + 1
+      valid = position_validation(key, row_right_1)
+      if valid
+        row_right_2 = index + 2
+        valid = position_validation(key, row_right_2)
+      end
+      if valid
+        grid_writer(key.to_s.ord+1, index, symbol)
+        possible_position << [[key, row_right_1], [key, row_right_2]]
+      end
+    end
+    # position_3_and_4[0][0] = possible_position.sample
+  end
+
+
+  #     possible_position << [row_right_1, column]
+  #   end
+  #   if key != :d
+  #     row = (key.to_s.ord+1).chr.to_sym
+  #     possible_position << [row, index]
+  #   end
+  #   if index != 1
+  #     column = index - 1
+  #     possible_position << [key, column]
+  #   end
+  # end
+
+
+
+  #       else
+  #         "right"
+  #       elsif direction == "right"
+  #         if valid place on grid
+  #         else
+  #           "vertical"
+  #         elsif location = "vertical"
   #   if horizontal [2 up = 2 down].pop
   #     if valid place on grid
   #       if invalid up do down
@@ -102,3 +148,14 @@ class Computer
 
 
 end
+
+
+# key = row_picker
+# index = column_picker
+# valid = grid_validator(key, index)
+# if valid
+#   grid_writer(key, index)
+# else
+#   ship_two
+# end
+# position_validation(key, index)

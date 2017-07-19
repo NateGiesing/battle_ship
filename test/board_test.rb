@@ -32,7 +32,4 @@ class BoardTest < Minitest::Test
     column = "3"
     assert board.grid_validator(row, column)
   end
-
-  
-
 end
