@@ -35,7 +35,7 @@ class ComputerTest < Minitest::Test
     computer.grid_writer(row, column, "$")
     # row = :c
     # column = 4
-    computer.second_placement_validator(row, column)
+    computer.ship_one_second_placement(row, column)
 
     expected = [computer.grid[:c][3], computer.grid[:a][3], computer.grid[:b][2],computer.grid[:b][4]].include?("$")
     assert expected
@@ -68,16 +68,17 @@ class ComputerTest < Minitest::Test
     refute result == [:c][3]
   end
 
-  def test_placing_size_three_ship
-    # skip
+  def test_finalize_second_ship
+    skip
     computer = Computer.new
     # computer.ship_two
-    computer.grid[:b][3] = "$"
-    computer.grid[:c][3] = "$"
-    computer.ship_two
-    require "pry"; binding.pry
-    assert_equal  "&", computer.grid
-    assert computer.grid[:a][2] == "&" || computer.grid[:d][2] == "&"
+    computer.grid[:b][3] = "&"
+    computer.grid[:c][3] = "&"
+    computer.grid[:d][3] = "&"
+    # computer.ship_two
+    # require "pry"; binding.pry
+    assert_equal  , computer.finalize_second_ship
+    # assert computer.grid[:a][2] == "&" || computer.grid[:d][2] == "&"
   end
 
 

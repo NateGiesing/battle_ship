@@ -1,6 +1,6 @@
-require "./lib/messages"
+require "./lib/message"
 class Manager
-  include Messages
+  include Message
 
   def start_game
     welcome
@@ -22,7 +22,7 @@ class Manager
     when "p"
       play_game
     when "i"
-      diplay_instructions
+      instructions_message
     when "q"
       quit_game
     else
